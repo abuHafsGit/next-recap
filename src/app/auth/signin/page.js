@@ -3,30 +3,22 @@ import React from 'react';
 import { Check } from "@gravity-ui/icons";
 import { Button, Description, FieldError, Form, Input, Label, TextField } from "@heroui/react";
 import { authClient } from '@/lib/auth-client';
-import { useRouter } from 'next/router';
 
-const SignupPage = () => {
-    // const router = useRouter()
+const SignIn = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target)
         const userData = Object.fromEntries(formData.entries());
         console.log('user data', userData)
 
-        const { data, error } = await authClient.signUp.email({
-            name: userData.name, // required
+        const { data, error } = await authClient.signIn.email({
+
             email: userData.email, // required
             password: userData.password, // required
-            callbackURL: "/dasboard",
-        }
-            // ,
-            //     {
-            //         onSuccess: () => {
-            //             router.push('/signup')
-            //         }
-            //     }
+            // callbackURL: "/",
+        },
         );
-
+        console.log({ data, error })
     }
     return (
         <div>
@@ -35,16 +27,7 @@ const SignupPage = () => {
                 render={(props) => <form {...props} data-custom="foo" />}
                 onSubmit={onSubmit}
             >
-                <TextField
-                    isRequired
-                    name="name"
-                    type="text"
 
-                >
-                    <Label>Name</Label>
-                    <Input placeholder="jhondeo" />
-                    <FieldError />
-                </TextField>
                 <TextField
                     isRequired
                     name="email"
@@ -98,4 +81,4 @@ const SignupPage = () => {
     );
 };
 
-export default SignupPage;
+export default SignIn;
